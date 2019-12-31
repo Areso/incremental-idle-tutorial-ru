@@ -11,6 +11,8 @@
   <button id="btnUpgCopperMine" onclick="upgCopperMine()" style="width: 240px;">Улучшить медную шахту, 10 медных монет</button><br>
   Медные монеты: <span id="spnCoppersValue">0</span><br>
   Скорость заработка медных монет: <span id="spnCoppersRate">1</span> в 2 секунды<br>
+  <button id="btnSaveGame" onclick="saveGame()" style="width: 240px;">Сохранить игру</button><br>
+  <button id="btnLoadGame" onclick="loadGame()" style="width: 240px;">Загрузить игру</button><br>
   <script>
     let coppers = 0;
     let copperGrowth = 1;
@@ -38,6 +40,21 @@
         document.getElementById("btnUpgCopperMine").innerHTML += " медных монет";
         document.getElementById("spnCoppersRate").innerHTML    = copperGrowth*coppersUpgLevel;
       }
+    }
+    function saveGame() {
+      localStorage.setItem('coppers', coppers);
+      localStorage.setItem('coppersUpgCost', coppersUpgCost);
+      localStorage.setItem('coppersUpgLevel', coppersUpgLevel);
+    }
+    function loadGame() {
+      coppers = parseInt(localStorage.getItem('coppers'));
+      coppersUpgCost = parseInt(localStorage.getItem('coppersUpgCost'));
+      coppersUpgLevel = parseInt(localStorage.getItem('coppersUpgLevel'));
+      document.getElementById("spnCoppersValue").innerHTML   = coppers;
+      document.getElementById("btnUpgCopperMine").innerHTML  = "Улучшить медную шахту, ";
+      document.getElementById("btnUpgCopperMine").innerHTML += coppersUpgCost.toString();
+      document.getElementById("btnUpgCopperMine").innerHTML += " медных монет";
+      document.getElementById("spnCoppersRate").innerHTML    = copperGrowth*coppersUpgLevel;
     }
   </script>
 </body>
