@@ -14,10 +14,16 @@
   <script>
     let coppers = 0;
     let copperGrowth = 1;
+    let win_condition = 50;
     myTimer = setInterval(endOfTurnCalc, 2000);
     function endOfTurnCalc() {
-      coppers = coppers+copperGrowth*coppersUpgLevel;;
-      document.getElementById("spnCoppersValue").innerHTML = coppers;
+      if (coppers < win_condition) {
+        coppers = coppers+copperGrowth*coppersUpgLevel;
+        document.getElementById("spnCoppersValue").innerHTML = coppers;
+      } else {
+        clearTimeout(myTimer);
+        alert("Вы достигли цели! Вы накопили "+win_condition.toString());
+      }
     }
     let coppersUpgCost  = 10;
     let coppersUpgLevel = 1;
