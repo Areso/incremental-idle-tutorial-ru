@@ -8,14 +8,28 @@
   </style>
 </head>
 <body>
+  <button id="btnUpgCopperMine" onclick="upgCopperMine()" style="width: 240px;">Улучшить медную шахту, 10 медных монет</button><br>
   Медные монеты: <span id="spnCoppersValue">0</span><br>
   <script>
     let coppers = 0;
     let copperGrowth = 1;
     myTimer = setInterval(endOfTurnCalc, 2000);
     function endOfTurnCalc() {
-      coppers = coppers+copperGrowth;
+      coppers = coppers+copperGrowth*coppersUpgLevel;;
       document.getElementById("spnCoppersValue").innerHTML = coppers;
+    }
+    let coppersUpgCost  = 10;
+    let coppersUpgLevel = 1;
+    function upgCopperMine() {
+      if (coppers>coppersUpgCost){
+        coppers = coppers-coppersUpgCost;
+        coppersUpgLevel = coppersUpgLevel + 1;
+        coppersUpgCost  = coppersUpgCost*2;
+        document.getElementById("spnCoppersValue").innerHTML   = coppers;
+        document.getElementById("btnUpgCopperMine").innerHTML  = "Улучшить медную шахту, ";
+        document.getElementById("btnUpgCopperMine").innerHTML += coppersUpgCost.toString();
+        document.getElementById("btnUpgCopperMine").innerHTML += " медных монет";
+      }
     }
   </script>
 </body>
