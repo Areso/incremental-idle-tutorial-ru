@@ -8,6 +8,15 @@
   </style>
 </head>
 <body>
-  Медные монеты: 0<br>
+  Медные монеты: <span id="spnCoppersValue">0</span><br>
+  <script>
+    let coppers = 0;
+    let copperGrowth = 1;
+    myTimer = setInterval(endOfTurnCalc, 2000);
+    function endOfTurnCalc() {
+      coppers = coppers+copperGrowth;
+      document.getElementById("spnCoppersValue").innerHTML = coppers;
+    }
+  </script>
 </body>
 </html>
