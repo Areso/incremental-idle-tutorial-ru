@@ -25,7 +25,7 @@
     function endOfTurnCalc() {
       if (game.coppers < win_condition) {
         game.coppers = game.coppers+game.copperGrowth*game.coppersUpgLevel;
-        document.getElementById("spnCoppersValue").innerHTML = game.coppers;
+        updateUI();
       } else {
         clearTimeout(myTimer);
         alert("Вы достигли цели! Вы накопили "+win_condition.toString());
@@ -38,23 +38,22 @@
       if (game.coppers>=coppersUpgCost()){
         game.coppers = game.coppers-coppersUpgCost();
         game.coppersUpgLevel = game.coppersUpgLevel + 1;
+        updateUI();
+      }
+    }
+    function updateUI() {
         document.getElementById("spnCoppersValue").innerHTML   = game.coppers;
         document.getElementById("btnUpgCopperMine").innerHTML  = "Улучшить медную шахту, ";
         document.getElementById("btnUpgCopperMine").innerHTML += coppersUpgCost().toString();
         document.getElementById("btnUpgCopperMine").innerHTML += " медных монет";
         document.getElementById("spnCoppersRate").innerHTML    = game.copperGrowth*game.coppersUpgLevel;
-      }
     }
     function saveGame() {
       localStorage.setItem('gameTutorial', JSON.stringify(game));
     }
     function loadGame() {
       game = JSON.parse(localStorage.getItem('gameTutorial'));
-      document.getElementById("spnCoppersValue").innerHTML   = game.coppers;
-      document.getElementById("btnUpgCopperMine").innerHTML  = "Улучшить медную шахту, ";
-      document.getElementById("btnUpgCopperMine").innerHTML += coppersUpgCost().toString();
-      document.getElementById("btnUpgCopperMine").innerHTML += " медных монет";
-      document.getElementById("spnCoppersRate").innerHTML    = game.copperGrowth*game.coppersUpgLevel;
+      updateUI();
     }
   </script>
 </body>
