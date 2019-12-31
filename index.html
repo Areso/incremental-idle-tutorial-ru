@@ -45,14 +45,10 @@
       }
     }
     function saveGame() {
-      localStorage.setItem('coppers', game.coppers);
-      localStorage.setItem('coppersUpgCost', game.coppersUpgCost);
-      localStorage.setItem('coppersUpgLevel', game.coppersUpgLevel);
+      localStorage.setItem('gameTutorial', JSON.stringify(game));
     }
     function loadGame() {
-      game.coppers = parseInt(localStorage.getItem('coppers'));
-      game.coppersUpgCost = parseInt(localStorage.getItem('coppersUpgCost'));
-      game.coppersUpgLevel = parseInt(localStorage.getItem('coppersUpgLevel'));
+      game = JSON.parse(localStorage.getItem('gameTutorial'));
       document.getElementById("spnCoppersValue").innerHTML   = game.coppers;
       document.getElementById("btnUpgCopperMine").innerHTML  = "Улучшить медную шахту, ";
       document.getElementById("btnUpgCopperMine").innerHTML += game.coppersUpgCost.toString();
