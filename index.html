@@ -137,7 +137,8 @@
       localStorage.setItem('gameTutorial', JSON.stringify(game));
     }
     function loadGame() {
-      game = JSON.parse(localStorage.getItem('gameTutorial'));
+      gameTemp = JSON.parse(localStorage.getItem('gameTutorial'));
+      for (var propertyName in gameTemp) { game[propertyName] = gameTemp[propertyName]; }
       updateUI();
     }
   </script>
