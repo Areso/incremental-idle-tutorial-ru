@@ -9,6 +9,7 @@
   </style>
 </head>
 <body>
+  <div id="divLblPrestige" style="display: none"></div>
   <button id="btnUpgCopperMine" onclick="upgCopperMine()" style="width: 240px;">Улучшить медную шахту, 15 медных монет</button><br>
   Медные монеты: <span id="spnCoppersValue">0</span><br>
   Скорость заработка медных монет: <span id="spnCoppersRate">1</span> в 2 секунды<br>
@@ -20,6 +21,7 @@
   <button id="btnBuySilver" onclick="buyCoppers()" style="width: 240px;">Купить 100 медных за 1 серебро </button><br>
   <hr>
   <button id="btnSaveGame" onclick="saveGame()" style="width: 240px;">Сохранить игру</button><br>
+  <br>
   <button id="btnLoadGame" onclick="loadGame()" style="width: 240px;">Загрузить игру</button><br>
   <script>
     let game = {
@@ -53,9 +55,31 @@
         game.silvers = game.silvers+game.silverGrowth*game.silversUpgLevel;
         updateUI();
       } else {
-        clearTimeout(myTimer);
-        alert("Вы достигли цели! Вы накопили "+win_condition.toString());
+        winGame();
       }
+    }
+    function winGame() {
+      clearTimeout(myTimer);
+      alert("Вы достигли цели! Вы накопили "+win_condition.toString());
+      myRestartTimer = setInterval(restartGameDialog, 2000);
+    }
+    function restartGameDialog() {
+      if (confirm('Хотите сыграть еще раз с очками Престижа?')) {
+        restartGame();
+      } else {
+        clearTimeout(myRestartTimer);
+      }
+    }
+    function restartGame() {
+      game.coppers = 1;
+      game.copperGrowth = game.copperGrowth+1;
+      game.coppersUpgLevel = 1;
+      game.silvers = 0;
+      game.silverGrowth = game.silverGrowth+1;
+      game.silversUpgLevel = 0;
+      clearTimeout(myRestartTimer);
+      myTimer = setInterval(endOfTurnCalc, 2000);
+      updateUI();
     }
     function coppersUpgCost() {
       return game.coppersUpgLevel*10+5;
@@ -102,6 +126,12 @@
         document.getElementById("btnUpgSilverMine").innerHTML += " серебряных монет";
       }
       document.getElementById("spnSilversRate").innerHTML    = game.silverGrowth*game.silversUpgLevel;
+      if (game.copperGrowth!==1) {
+        document.getElementById("divLblPrestige").innerHTML = "Мультипликатор от эффекта Престижа равен "+game.copperGrowth.toString();
+        document.getElementById("divLblPrestige").style.display = "block";
+      } else {
+        document.getElementById("divLblPrestige").style.display = "none";
+      }
     }
     function saveGame() {
       localStorage.setItem('gameTutorial', JSON.stringify(game));
