@@ -12,9 +12,13 @@
   <button id="btnUpgCopperMine" onclick="upgCopperMine()" style="width: 240px;">Улучшить медную шахту, 15 медных монет</button><br>
   Медные монеты: <span id="spnCoppersValue">0</span><br>
   Скорость заработка медных монет: <span id="spnCoppersRate">1</span> в 2 секунды<br>
+  <button id="btnBuySilver" onclick="buySilver()" style="width: 240px;">Купить 1 серебро за 100 медных</button><br>
+  <hr>
   <button id="btnUpgSilverMine" onclick="upgSilverMine()" style="width: 240px;">Построить серебряную шахту, 50 медных монет</button><br>
   Серебряные монеты: <span id="spnSilversValue">0</span><br>
   Скорость заработка серебряных монет: <span id="spnSilversRate">0</span> в 2 секунды<br>
+  <button id="btnBuySilver" onclick="buyCoppers()" style="width: 240px;">Купить 100 медных за 1 серебро </button><br>
+  <hr>
   <button id="btnSaveGame" onclick="saveGame()" style="width: 240px;">Сохранить игру</button><br>
   <button id="btnLoadGame" onclick="loadGame()" style="width: 240px;">Загрузить игру</button><br>
   <script>
@@ -29,6 +33,20 @@
     let win_condition = 50;
     let silverMineBasePriceCoppers = 100;
     myTimer = setInterval(endOfTurnCalc, 2000);
+    function buySilver() {
+      if (game.coppers>=100) {
+        game.coppers = game.coppers - 100;
+        game.silvers = game.silvers + 1;
+        updateUI();
+      }
+    }
+    function buyCoppers() {
+      if (game.silvers>=1) {
+        game.coppers = game.coppers + 100;
+        game.silvers = game.silvers - 1;
+        updateUI();
+      }
+    }
     function endOfTurnCalc() {
       if (game.silvers < win_condition) {
         game.coppers = game.coppers+game.copperGrowth*game.coppersUpgLevel;
